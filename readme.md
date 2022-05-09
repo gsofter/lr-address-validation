@@ -1,4 +1,4 @@
-# Address Approval Status Checker
+# TransferManagerERC721 Approval Status Checker
 
 ### Details:
 
