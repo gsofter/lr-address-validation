@@ -5,10 +5,13 @@ import { TRANSFER_MANAGER_ERC721_ADDRESS } from '../utils/constants'
 import { CheckApprovalRequest, AddressType } from '../generated/resolvers-types'
 
 export const checkApprovalStatus = async (request: CheckApprovalRequest) => {
-  const nftCollectionContract = new ethers.Contract(request.collection, erc721Abi, getProvider(request.rpcGateway))
+  const provider = getProvider(request.rpcGateway)
+  const nftCollectionContract = new ethers.Contract(request.collection, erc721Abi, provider)
 
   if (request.address.type === AddressType.Eoa)
     return await nftCollectionContract.isApprovedForAll(request.address.value, TRANSFER_MANAGER_ERC721_ADDRESS)
 
-  return true
+  // convert ens domain to actual eth address
+  const ethAddress = await provider.resolveName(request.address.value)
+  return await nftCollectionContract.isApprovedForAll(ethAddress, TRANSFER_MANAGER_ERC721_ADDRESS)
 }
