@@ -7,12 +7,12 @@ Create a GraphQL API with TypeScript using [apollo-server-express](https://www.n
 
 ### How to setup
 
-Install dependencies
+**Install dependencies**
 ```sh
 yarn install
 ```
 
-Generate types from graphql schema
+**Generate types from graphql schema**
 ```sh
 yarn generate
 ```
@@ -20,12 +20,14 @@ yarn generate
 It will generate `src/generated/resolvers-types.ts` from `schema/schema.graphql`.
 
 
-Run on local
+**Run on local**
 ```sh
 yarn dev
 ```
 
-Build and start in production
+To play with graphql playground, go to `localhost:4000/graphql/playground`.
+
+**Build and start in production**
 ```sh
 yarn build && yarn start
 ```
