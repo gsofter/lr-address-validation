@@ -1,6 +1,7 @@
 import * as Service from '../controllers'
+import { Resolvers } from '../generated/resolvers-types'
 
-export const resolvers = {
+export const resolvers: Resolvers = {
   Query: {
     greeting() {
       return 'Hello'

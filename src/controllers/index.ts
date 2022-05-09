@@ -1,11 +1,14 @@
 import { ethers } from 'ethers'
 import erc721Abi from '../utils/erc721abi.json'
 import { getProvider } from '../utils/provider'
-import { ICheckApprovalRequest } from '../utils/types'
 import { TRANSFER_MANAGER_ERC721_ADDRESS } from '../utils/constants'
+import { CheckApprovalRequest, AddressType } from '../generated/resolvers-types'
 
-export const checkApprovalStatus = async (request: ICheckApprovalRequest) => {
+export const checkApprovalStatus = async (request: CheckApprovalRequest) => {
   const nftCollectionContract = new ethers.Contract(request.collection, erc721Abi, getProvider(request.rpcGateway))
 
-  return await nftCollectionContract.isApprovedForAll(request.eoa, TRANSFER_MANAGER_ERC721_ADDRESS)
+  if (request.address.type === AddressType.Eoa)
+    return await nftCollectionContract.isApprovedForAll(request.address.value, TRANSFER_MANAGER_ERC721_ADDRESS)
+
+  return true
 }

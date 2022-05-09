@@ -1,0 +1,23 @@
+enum AddressType {
+  ENS
+  EOA
+}
+
+input AddressRequest {
+  type: AddressType
+  value: String
+}
+
+input CheckApprovalRequest {
+  address: AddressRequest!
+  collection: String!
+  rpcGateway: String
+}
+
+type Query {
+  greeting: String
+}
+
+type Mutation {
+  checkApprovalStatus(request: CheckApprovalRequest): Boolean
+}

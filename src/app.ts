@@ -2,9 +2,10 @@ import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express from 'express'
 import http from 'http'
+import { readFileSync } from 'fs'
 
-import { schema } from './schema'
 import { resolvers } from './resolvers'
+const typeDefs = readFileSync('./src/schema/schema.graphql', 'utf-8')
 
 async function startApolloServer(typeDefs, resolvers) {
   const app = express()
@@ -21,4 +22,4 @@ async function startApolloServer(typeDefs, resolvers) {
   console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
 }
 
-startApolloServer(schema, resolvers)
+startApolloServer(typeDefs, resolvers)
