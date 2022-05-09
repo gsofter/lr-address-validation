@@ -1,12 +1,20 @@
 import * as Service from '../controllers'
 
 export const resolvers = {
-  Query: {},
-
+  Query: {
+    books() {
+      return [
+        {
+          title: 'Example Book',
+          author: 'Jack',
+        },
+      ]
+    },
+  },
   Mutation: {
-    validateAddressRequest(root, args) {
-      console.log('Mutation: validateAddressRequest', args)
-      return Service.validateAddressRequest(args.request)
+    checkApprovalStatus(root, args) {
+      console.log('Mutation: checkApprovalStatus', args)
+      return Service.checkApprovalStatus(args.request)
     },
   },
 }
