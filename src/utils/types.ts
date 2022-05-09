@@ -1,4 +1,4 @@
-export interface IAddressRequest {
+export interface ICheckApprovalRequest {
   eoa: string
   ens: string
   collection: string

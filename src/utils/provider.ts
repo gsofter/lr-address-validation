@@ -1,3 +1,4 @@
 import { ethers } from 'ethers'
 
-export const provider = new ethers.providers.StaticJsonRpcProvider('https://cloudflare-eth.com/')
+export const getProvider = (providerUrl: string) =>
+  new ethers.providers.StaticJsonRpcProvider(providerUrl || 'https://cloudflare-eth.com/')
