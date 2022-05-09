@@ -8,13 +8,8 @@ export const schema = gql`
     rpcGateway: String
   }
 
-  type Book {
-    title: String
-    author: String
-  }
-
   type Query {
-    books: [Book]
+    greeting: String
   }
 
   type Mutation {
