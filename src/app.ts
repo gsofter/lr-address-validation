@@ -1,24 +1,21 @@
-import express, { Application } from 'express'
-import logger from 'morgan'
+import { ApolloServer } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
+import express from 'express'
+import http from 'http'
 
-const app: Application = express()
-const port = process.env.PORT || '8080'
+async function startApolloServer(typeDefs, resolvers) {
+  const app = express()
+  const httpServer = http.createServer(app)
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    csrfPrevention: true,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+  })
+  await server.start()
+  server.applyMiddleware({ app })
+  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve))
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+}
 
-app.use(logger('dev'))
-
-app.get('/', (req, res) => {
-  res.status(200).send('<H1>Hello from Node!</H1>')
-})
-
-app.get('/health/check', (req, res) => {
-  res.status(200).send('Nodes is up!')
-})
-
-app.get('/health/readiness', (req, res) => {
-  res.status(200).send('Node is ready!')
-})
-
-app.listen(port, () => {
-  // if (err) return console.error(err)
-  return console.log(`server is listening on ${port}`)
-})
+startApolloServer()
